@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-@Controller("/")
+@Controller("/book")
 @Validated
 public class ExampleController {
     private static final Logger LOG = LoggerFactory.getLogger(ExampleController.class);
@@ -22,12 +22,12 @@ public class ExampleController {
         this.bookRepository = bookRepository;
     }
 
-    @Put("/book")
+    @Put("/")
     public BookSaved putBook(@Valid @Body Book book) {
         return bookRepository.saveBook(book);
     }
 
-    @Get("/book/{id}")
+    @Get("/{id}")
     public BookSaved getBookById(@PathVariable(name = "id") String id) {
         return bookRepository.findById(id)
                 .orElseGet(() -> {
