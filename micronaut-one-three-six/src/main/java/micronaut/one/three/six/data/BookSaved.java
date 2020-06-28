@@ -19,6 +19,11 @@ public class BookSaved {
 
     }
 
+    public BookSaved(@NotNull @NotBlank String name, @NotNull @NotBlank String isbn) {
+        this.name = name;
+        this.isbn = isbn;
+    }
+
     @NotNull
     public String getName() {
         return name;
