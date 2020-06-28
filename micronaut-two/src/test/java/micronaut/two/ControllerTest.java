@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 
 @MicronautTest
-public class BookRequestHandlerTest {
+public class ControllerTest {
 
     @Inject
     @Client("/")
