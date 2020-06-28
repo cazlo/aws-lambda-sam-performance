@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
+import static micronaut.one.three.six.data.BookRepository.defaultBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -23,15 +24,28 @@ public class ControllerTest {
     RxHttpClient client;
 
     @Test void itShouldPutBook() {
-        Book b = new Book();
-        b.setName("name");
-        HttpRequest<Book> request = HttpRequest.PUT("/book", b);
+        Book inputBook = new Book();
+        inputBook.setName("name");
+        HttpRequest<Book> request = HttpRequest.PUT("/book", inputBook);
 
         HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class);
 
         assertEquals(HttpStatus.OK, rsp.getStatus());
-        assertNotNull(rsp.body());
-        assertNotNull(rsp.body().getIsbn());
-        assertNotNull(rsp.body().getName());
+        assertNotNull(rsp.getBody());
+        BookSaved actualBook = rsp.getBody().get();
+        assertNotNull(actualBook.getIsbn());
+        assertEquals(inputBook.getName(), actualBook.getName());
+    }
+
+    @Test void itShouldGetBook() {
+        HttpRequest<Book> request = HttpRequest.GET("/book/" + defaultBook.getIsbn());
+
+        HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class);
+
+        assertEquals(HttpStatus.OK, rsp.getStatus());
+        assertNotNull(rsp.getBody());
+        BookSaved actualBook = rsp.getBody().get();
+        assertEquals(defaultBook.getIsbn(), actualBook.getIsbn());
+        assertEquals(defaultBook.getName(), actualBook.getName());
     }
 }

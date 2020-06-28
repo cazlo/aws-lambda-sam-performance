@@ -1,0 +1,6 @@
+GET http://localhost:3000/book/42
+Accept: */*
+Cache-Control: no-cache
+
+###
+

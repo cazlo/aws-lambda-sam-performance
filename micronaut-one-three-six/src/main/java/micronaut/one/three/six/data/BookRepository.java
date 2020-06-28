@@ -10,8 +10,10 @@ import java.util.UUID;
 
 @Singleton
 public class BookRepository {
-
-    private static final List<BookSaved> books = new ArrayList<>();
+    public static final BookSaved defaultBook = new BookSaved("Hitchhiker's Guide", "42");
+    private static final List<BookSaved> books = new ArrayList<>(){{
+        add(defaultBook);
+    }};
 
     public BookSaved saveBook(Book toSave){
         BookSaved saved = new BookSaved();

@@ -3,6 +3,7 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Introspected
 public class BookSaved {
@@ -17,6 +18,11 @@ public class BookSaved {
 
     public BookSaved() {
 
+    }
+
+    public BookSaved(@NotNull @NotBlank String name, @NotNull @NotBlank String isbn) {
+        this.name = name;
+        this.isbn = isbn;
     }
 
     @NonNull
