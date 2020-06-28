@@ -40,7 +40,11 @@ dependencies {
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation "org.junit.jupiter:junit-jupiter-api"
     testImplementation "io.micronaut.test:micronaut-test-junit5"
+    testImplementation "io.micronaut:micronaut-function-client"
+    testImplementation "io.micronaut:micronaut-inject-java"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testRuntimeOnly "io.micronaut:micronaut-http-server-netty"
+    testRuntimeOnly "io.micronaut:micronaut-function-web"
 }
 
 test.classpath += configurations.developmentOnly
