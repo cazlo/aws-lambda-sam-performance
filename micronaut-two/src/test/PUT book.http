@@ -1,0 +1,9 @@
+PUT http://localhost:3000/book
+Accept: */*
+Cache-Control: no-cache
+Content-Type: Application/JSON
+
+{"name": "test"}
+
+###
+
