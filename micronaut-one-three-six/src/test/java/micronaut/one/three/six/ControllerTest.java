@@ -6,6 +6,8 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.annotation.MicronautTest;
+import micronaut.one.three.six.controller.Book;
+import micronaut.one.three.six.data.BookSaved;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
@@ -21,13 +23,15 @@ public class ControllerTest {
     RxHttpClient client;
 
     @Test void itShouldPutBook() {
-        //when:
-        HttpRequest request = HttpRequest.GET("/ping");
+        Book b = new Book();
+        b.setName("name");
+        HttpRequest<Book> request = HttpRequest.PUT("/book", b);
 
-        HttpResponse<String> rsp = client.toBlocking().exchange(request, String.class);
+        HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class);
 
-        //then: 'the endpoint can be accessed'
         assertEquals(HttpStatus.OK, rsp.getStatus());
         assertNotNull(rsp.body());
+        assertNotNull(rsp.body().getIsbn());
+        assertNotNull(rsp.body().getName());
     }
 }
