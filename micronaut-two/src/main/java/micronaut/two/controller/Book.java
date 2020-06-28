@@ -1,22 +1,16 @@
-package micronaut.two;
+package micronaut.two.controller;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
-
 import javax.validation.constraints.NotBlank;
 
 @Introspected
-public class BookSaved {
+public class Book {
 
     @NonNull
     @NotBlank
     private String name;
 
-    @NonNull
-    @NotBlank
-    private String isbn;
-
-    public BookSaved() {
-
+    public Book() {
     }
 
     @NonNull
@@ -26,14 +20,5 @@ public class BookSaved {
 
     public void setName(@NonNull String name) {
         this.name = name;
-    }
-
-    @NonNull
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(@NonNull String isbn) {
-        this.isbn = isbn;
     }
 }
