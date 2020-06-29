@@ -26,4 +26,4 @@ Outputs:
     Description: URL for application
     Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/book'
     Export:
-      Name: MyServiceApi
+      Name: !Sub '${AWS::StackName}-MyServiceApi'
