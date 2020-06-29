@@ -34,9 +34,6 @@ comparing performance characteristics of various ways of using AWS's SAM for lam
 
 #### Non-cold Starts
 
-### Raw Test Data
-
-#### Micronaut 1.3.6 Inside AWS
-#### Micronaut 1.3.6 Outside of AWS
-#### Micronaut 2.0.0 Inside AWS
-#### Micronaut 2.0.0 Outside of AWS
+| Framework | Location | Request Count | Lambda Run Time (ms) | Total Latency (ms) | Latency min (ms) | Latency avg (ms) | Latency p75 (ms) | Latency max (ms) |  
+|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|
