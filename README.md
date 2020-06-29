@@ -1,7 +1,7 @@
 # aws-lambda-sam-performance
 comparing performance characteristics of various ways of using AWS's SAM for lambdas
 
-## Test Setup
+## Test Setup Notes
 
 1. Do not exceed ~200 RPS for a single node. If more throughput than this is required,
    the load will need to be distributed across more than 1 node (laptop/EC2). In practice
@@ -20,8 +20,14 @@ comparing performance characteristics of various ways of using AWS's SAM for lam
    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/
    | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration
    | filter ispresent(@duration) and ispresent(InitDuration)
-   | stats avg(@duration) as avg, max(@duration) as max, min(@duration) as min, stddev(@duration) as dev by bin(1s)
+   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg, pct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)
    ```
+5. Memory use is part of cost function and should be measured.  
+   ```
+   parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/
+   | filter @message like "REPORT"
+   | stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)
+   ``` 
 
 ## Test Results
 
@@ -31,9 +37,11 @@ comparing performance characteristics of various ways of using AWS's SAM for lam
 | Framework | Location | Cold Start Count | Init Time (ms) | Cold Run Time (ms) | Total Latency (ms) | Total min (ms) | Total avg (ms) | Total p75 (ms) | Total max (ms) |  
 |---|---|---|---|---|---|---|---|---|---|
 |---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|
 
 #### Non-cold Starts
 
 | Framework | Location | Request Count | Lambda Run Time (ms) | Total Latency (ms) | Latency min (ms) | Latency avg (ms) | Latency p75 (ms) | Latency max (ms) |  
+|---|---|---|---|---|---|---|---|---|
 |---|---|---|---|---|---|---|---|---|
 |---|---|---|---|---|---|---|---|---|
