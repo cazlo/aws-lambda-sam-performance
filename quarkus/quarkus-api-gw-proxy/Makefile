@@ -1,7 +1,5 @@
 build-function-zip:
-	echo 'TODO building function zip steps go here' && \
-	mkdir -p build && \
-	touch build/function.zip
+	./mvnw clean package -Pnative -Dnative-image.docker-build=true
 
 deploy:
 	echo 'TODO deploy steps go here' && \
