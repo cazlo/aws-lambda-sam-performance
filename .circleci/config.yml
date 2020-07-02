@@ -85,6 +85,8 @@ jobs:
       - aws-cli/setup
       - run:
           command: make deploy-quarkus-api-gw-proxy
+      - run:
+          command: make deploy-quarkus-api-gw-proxy-jvm
       - store_artifacts:
           path: /tmp/aws-lambda-sam-performance/quarkus/quarkus-api-gw-proxy/packaged.yaml
 orbs:
