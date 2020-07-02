@@ -12,3 +12,5 @@ build-quarkus-api-gw-proxy:
 		$(MAKE) -C quarkus/quarkus-api-gw-proxy build-function-zip
 deploy-quarkus-api-gw-proxy:
 		$(MAKE) -C quarkus/quarkus-api-gw-proxy deploy
+deploy-quarkus-api-gw-proxy-jvm:
+		$(MAKE) -C quarkus/quarkus-api-gw-proxy deploy-jvm
