@@ -8,11 +8,6 @@
         - "*/*"
 
   Resources:
-    ApiGatewayApi:
-      Type: AWS::Serverless::Api
-      Properties:
-        StageName: prod
-
     LambdaQuarkusFunction:
       Type: AWS::Serverless::Function
       Properties:
@@ -33,6 +28,8 @@
               Method: any
 
   Outputs:
-    ApiUrl:
-      Description: URL of the users listing in the prod stage
-      Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/prod/users"
+    MyServiceApi:
+      Description: URL for application
+      Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'
+      Export:
+        Name: !Sub '${AWS::StackName}-api'
