@@ -3,11 +3,11 @@ version: '3'
 services:
   aws-sam-local:
     image: sam-local-docker
-    command: local start-api --docker-volume-basedir "$PWD" --host 0.0.0.0 -t sam.yaml
+    command: local start-api --docker-volume-basedir "$PWD" --host 0.0.0.0 -t sam-packaged.yaml
     environment:
       - SAM_CLI_TELEMETRY=0
     ports:
       - '3000:3000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./:/var/opt
+      - ./build/:/var/opt

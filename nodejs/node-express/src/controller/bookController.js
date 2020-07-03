@@ -11,7 +11,7 @@ const get = (req, res) => {
 }
 // get /book
 const getAll = (req, res) => {
-    res.json(getAllBooks());
+    res.status(200).json(getAllBooks());
 }
 // post /book
 const post = (req, res) => {

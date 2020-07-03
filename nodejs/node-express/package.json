@@ -2,7 +2,7 @@
   "name": "aws-serverless-express-simple-example",
   "version": "1.0.0",
   "description": "Example application for running a Node Express app on AWS Lambda using Amazon API Gateway.",
-  "main": "src/lambda.js",
+  "main": "index.js",
   "scripts": {
     "start": "node test/app.local.js",
     "test": "echo todo",
