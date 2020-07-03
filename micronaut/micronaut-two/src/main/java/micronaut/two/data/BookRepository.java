@@ -15,7 +15,7 @@ public class BookRepository {
         add(defaultBook);
     }};
 
-    public BookSaved saveBook(Book toSave){
+    public BookSaved createBook(Book toSave){
         BookSaved saved = new BookSaved();
         saved.setIsbn(UUID.randomUUID().toString());
         saved.setName(toSave.getName());
@@ -26,5 +26,13 @@ public class BookRepository {
         return books.stream()
                 .filter(b -> b.getIsbn().equals(id))
                 .findFirst();
+    }
+
+    public Optional<BookSaved> update(String id, Book toUpdate){
+        return findById(id)
+                .map(b -> {
+                    b.setName(toUpdate.getName());
+                    return b;
+                });
     }
 }

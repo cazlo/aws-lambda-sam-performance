@@ -1,13 +1,14 @@
 package micronaut.two;
 import static micronaut.two.data.BookRepository.defaultBook;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.annotation.MicronautTest;
 import micronaut.two.controller.Book;
 import micronaut.two.data.BookRepository;
@@ -23,10 +24,10 @@ public class ControllerTest {
     @Client("/")
     RxHttpClient client;
 
-    @Test void itShouldPutBook() {
+    @Test void itShouldCreateBook() {
         Book inputBook = new Book();
-        inputBook.setName("name");
-        HttpRequest<Book> request = HttpRequest.PUT("/book", inputBook);
+        inputBook.setName("some new book name");
+        HttpRequest<Book> request = HttpRequest.POST("/book/", inputBook);
 
         HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class);
 
@@ -35,6 +36,18 @@ public class ControllerTest {
         BookSaved actualBook = rsp.getBody().get();
         assertNotNull(actualBook.getIsbn());
         assertEquals(inputBook.getName(), actualBook.getName());
+    }
+
+    @Test void itShouldNotCreateInvalidBook() {
+        Book emptyBook = new Book();
+        HttpRequest<Book> request = HttpRequest.POST("/book/", emptyBook);
+
+        HttpClientResponseException error = assertThrows(
+                HttpClientResponseException.class,
+                () -> { HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class); }
+        );
+
+        assertEquals(HttpStatus.BAD_REQUEST, error.getResponse().getStatus());
     }
 
     @Test void itShouldGetBook() {
@@ -49,4 +62,41 @@ public class ControllerTest {
         assertEquals(defaultBook.getName(), actualBook.getName());
     }
 
+    @Test void notFoundGetUnkownBook() {
+        HttpRequest<Book> request = HttpRequest.GET("/book/" + defaultBook.getIsbn() + "not-found-for-sure!");
+
+        HttpClientResponseException error = assertThrows(
+                HttpClientResponseException.class,
+                () -> { HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class); }
+        );
+
+        assertEquals(HttpStatus.NOT_FOUND, error.getResponse().getStatus());
+    }
+
+    @Test void itShouldUpdateBook() {
+        Book inputBook = new Book();
+        inputBook.setName("name");
+        HttpRequest<Book> request = HttpRequest.PUT("/book/" + defaultBook.getIsbn(), inputBook);
+
+        HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class);
+
+        assertEquals(HttpStatus.OK, rsp.getStatus());
+        assertNotNull(rsp.getBody());
+        BookSaved actualBook = rsp.getBody().get();
+        assertNotNull(actualBook.getIsbn());
+        assertEquals(inputBook.getName(), actualBook.getName());
+    }
+
+    @Test void notFoundForUpdateUnkownBook() {
+        Book inputBook = new Book();
+        inputBook.setName("name");
+        HttpRequest<Book> request = HttpRequest.PUT("/book/123dfke9djkfd", inputBook);
+
+        HttpClientResponseException error = assertThrows(
+                HttpClientResponseException.class,
+                () -> { HttpResponse<BookSaved> rsp = client.toBlocking().exchange(request, BookSaved.class); }
+        );
+
+        assertEquals(HttpStatus.NOT_FOUND, error.getResponse().getStatus());
+    }
 }
