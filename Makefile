@@ -21,3 +21,6 @@ deploy-quarkus-api-gw-event-handler:
 		$(MAKE) -C quarkus/quarkus-api-gw-event-handler deploy
 deploy-quarkus-api-gw-event-handler-jvm:
 		$(MAKE) -C quarkus/quarkus-api-gw-event-handler deploy-jvm
+
+deploy-load-all-remote:
+		$(MAKE) -C load-test load-all-remote
