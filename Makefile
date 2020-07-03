@@ -22,5 +22,21 @@ deploy-quarkus-api-gw-event-handler:
 deploy-quarkus-api-gw-event-handler-jvm:
 		$(MAKE) -C quarkus/quarkus-api-gw-event-handler deploy-jvm
 
-deploy-load-all-remote:
+build-node-express:
+		$(MAKE) -C nodejs/node-express build
+deploy-node-express:
+		$(MAKE) -C nodejs/node-express deploy
+
+load-all-remote:
 		$(MAKE) -C load-test load-all-remote
+
+build-latest-sam-local:
+		$(MAKE) -C sam-local build
+
+build-all:
+	$(MAKE) build-latest-sam-local && \
+	$(MAKE) build-micronaut-2 && \
+	$(MAKE) build-micronaut-1-3-6 && \
+	$(MAKE) build-quarkus-api-gw-proxy && \
+	$(MAKE) build-quarkus-api-gw-event-handler && \
+	$(MAKE) build-node-express

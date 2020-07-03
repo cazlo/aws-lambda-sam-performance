@@ -6,27 +6,20 @@ Resources:
   ApiGatewayApi:
     Type: AWS::Serverless::Api
     Properties:
-      DefinitionUri: ./simple-proxy-api.yaml
-      StageName: prod
+      StageName: Prod
       Variables:
         ServerlessExpressLambdaFunctionName: !Ref YOUR_SERVERLESS_EXPRESS_LAMBDA_FUNCTION_NAME
 
-  YOUR_SERVERLESS_EXPRESS_LAMBDA_FUNCTION_NAME:
+  NodeExpressFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./
-      Handler: lambda.handler
-      MemorySize: 1024
+      CodeUri: ./function.zip
+      Handler: index.handler
+      MemorySize: 128
       Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: nodejs8.10
-      Timeout: 30
+      Runtime: nodejs12.x
+      Timeout: 15
       Events:
-        ProxyApiRoot:
-          Type: Api
-          Properties:
-            RestApiId: !Ref ApiGatewayApi
-            Path: /
-            Method: ANY
         ProxyApiGreedy:
           Type: Api
           Properties:
@@ -44,4 +37,4 @@ Outputs:
         - !Ref ApiGatewayApi
         - ".execute-api."
         - !Ref AWS::Region
-        - ".amazonaws.com/prod/"
+        - ".amazonaws.com/Prod/"
