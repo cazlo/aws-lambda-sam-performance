@@ -1,4 +1,4 @@
-appName = quarkus-api-gw-proxy
+appName = quarkus-api-gw-event-handler
 artifactBucketName = sam-perf-analysis-artifacts
 templateFile = sam.native.yaml
 templateFileJvm = sam.jvm.yaml

@@ -14,3 +14,10 @@ deploy-quarkus-api-gw-proxy:
 		$(MAKE) -C quarkus/quarkus-api-gw-proxy deploy
 deploy-quarkus-api-gw-proxy-jvm:
 		$(MAKE) -C quarkus/quarkus-api-gw-proxy deploy-jvm
+
+build-quarkus-api-gw-event-handler:
+		$(MAKE) -C quarkus/quarkus-api-gw-event-handler build-function-zip
+deploy-quarkus-api-gw-event-handler:
+		$(MAKE) -C quarkus/quarkus-api-gw-event-handler deploy
+deploy-quarkus-api-gw-event-handler-jvm:
+		$(MAKE) -C quarkus/quarkus-api-gw-event-handler deploy-jvm

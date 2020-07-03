@@ -89,6 +89,36 @@ jobs:
           command: make deploy-quarkus-api-gw-proxy-jvm
       - store_artifacts:
           path: /tmp/aws-lambda-sam-performance/quarkus/quarkus-api-gw-proxy/packaged.yaml
+
+  quarkus-api-gw-event-handler-build:
+    docker:
+      - image: cimg/openjdk:11.0
+    working_directory: /tmp/aws-lambda-sam-performance
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: make build-quarkus-api-gw-event-handler
+      - persist_to_workspace:
+          root: /tmp/aws-lambda-sam-performance/
+          paths:
+            - Makefile
+            - quarkus/quarkus-api-gw-event-handler/*
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/quarkus/quarkus-api-gw-event-handler/target
+  quarkus-api-gw-event-handler-deploy:
+    executor: aws-cli/default
+    working_directory: /tmp/aws-lambda-sam-performance
+    steps:
+      - attach_workspace:
+          at: /tmp/aws-lambda-sam-performance/
+      - aws-cli/setup
+      - run:
+          command: make deploy-quarkus-api-gw-event-handler
+      - run:
+          command: make deploy-quarkus-api-gw-event-handler-jvm
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/quarkus/quarkus-api-gw-event-handler/packaged.yaml
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
 workflows:
@@ -124,6 +154,17 @@ workflows:
       - quarkus-api-gw-proxy-deploy:
           requires:
             - quarkus-api-gw-proxy-build
+          filters:
+            branches:
+              only: /quarkus.*/
+
+      - quarkus-api-gw-event-handler-build:
+          filters:
+            branches:
+              only: /quarkus.*/
+      - quarkus-api-gw-event-handler-deploy:
+          requires:
+            - quarkus-api-gw-event-handler-build
           filters:
             branches:
               only: /quarkus.*/
