@@ -1,0 +1,10 @@
+FROM homebrew/ubuntu20.04
+
+RUN brew tap aws/tap && \
+    brew install aws-sam-cli --head
+
+WORKDIR /var/opt
+
+EXPOSE 3000
+
+ENTRYPOINT ["sam"]

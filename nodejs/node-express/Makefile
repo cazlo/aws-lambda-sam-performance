@@ -8,14 +8,21 @@ packagedCfFileName = packaged.yaml
 #		docker build -t $(appName) . && \
 #        mkdir -p build && \
 #        docker run --rm --entrypoint cat $(appName) /home/application/function.zip > build/function.zip
-build:
-	npm install && \
+test:
+	npm ci && \
 	npm run lint && \
-	npm run test && \
-	rm -f function.zip && \
-	zip -r function.zip node_modules && \
-	zip function.zip index.js && \
-	find src -name "*" -print | xargs zip function.zip
+	npm run test
+
+build:
+	$(MAKE) test && \
+	rm -rf node_modules && \
+	npm ci --production&& \
+	rm -rf build && mkdir -p build/function && \
+	rsync -aqvz src build/function/&& \
+	cp index.js build/function/index.js && \
+	cp sam-packaged.yaml build/sam-packaged.yaml && \
+	rsync -aqvz node_modules build/function/
+
 deploy:
 	$(MAKE) cf-pkg && $(MAKE) cf-deploy
 cf-pkg:
@@ -33,6 +40,8 @@ cf-deploy:
         --tags app=$(appName)
 
 sam-local:
-	sam local start-api -t $(templateCfFileName) -p 3000
+	docker-compose -f docker-compose-sam-packaged.yaml up
 sam-local-unpackaged:
-	sam local start-api -t $(templateCfUnpackagedFileName) -p 3000
+	docker-compose -f docker-compose.yaml up
+
+.PHONY: sam-local sam-local-unpackaged build test
