@@ -218,10 +218,14 @@ workflows:
       - node-express-build:
           filters:
             branches:
-              only: /node.*/
+              only:
+                - /node.*/
+                - master
       - node-express-deploy:
           requires:
             - node-express-build
           filters:
             branches:
-              only: /node.*/
+              only:
+                - /node.*/
+                - master
