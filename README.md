@@ -1,4 +1,5 @@
 # aws-lambda-sam-performance
+![SAM-logo](./sam-logo.png)  
 comparing performance characteristics of various ways of using AWS's SAM for lambdas
 
 ## Test Setup Notes

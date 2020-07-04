@@ -1,8 +1,8 @@
-const {defaults} = require('jest-config');
+// const {defaults} = require('jest-config');
 module.exports = {
   // testMatch: defaults.testMatch,
   collectCoverage: true,
-  coverageDirectory: './build/reports/coverage',
+  coverageDirectory: 'build/reports/coverage',
   coveragePathIgnorePatterns: ['/node_modules/', 'src/data/*'],
   reporters: [
     'default',
@@ -10,7 +10,7 @@ module.exports = {
       'jest-junit',
       {
         suiteName: '{filename}',
-        outputDirectory: '../build/reports/junit/jest',
+        outputDirectory: 'build/reports/junit/jest',
         outputName: './results.xml',
         classNameTemplate: '{classname}',
         titleTemplate: '{title}',
@@ -21,7 +21,7 @@ module.exports = {
   ],
   projects: [
     {
-      displayName: 'test',
+      displayName: 'unit',
       testMatch: ['<rootDir>/test/**/*.test.[jt]s', '<rootDir>/test/*.test.[jt]s'],
     },
   ],
