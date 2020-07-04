@@ -11,7 +11,8 @@ packagedCfFileName = packaged.yaml
 test:
 	npm ci && \
 	npm run lint && \
-	npm run test
+	npm run test-ci && \
+	npm run test-int-ci
 
 build:
 	$(MAKE) test && \
