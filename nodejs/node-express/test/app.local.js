@@ -1,5 +1,10 @@
-const app = require('../src/app')
-const port = 3000
+const app = require("../src/app");
 
-app.listen(port)
-console.log(`listening on http://localhost:${port}`)
+const port = 3000;
+
+const startApp = () => {
+  // console.log(`listening on http://localhost:${port}`);
+  app.listen(port);
+};
+
+module.exports = startApp();

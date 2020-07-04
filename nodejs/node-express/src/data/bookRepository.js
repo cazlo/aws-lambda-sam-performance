@@ -1,29 +1,33 @@
-const uuid = require('uuid');
+const uuid = require("uuid");
 
 // Ephemeral in-memory data store
-const books = [{
-    id: 42,
-    name: 'The Answer To Everything'
-}]
+const books = [
+  {
+    id: "42",
+    name: "The Answer To Everything"
+  }
+];
 
-const createBook = (name) => {
-    const book = {
-        id: uuid.v4(),
-        name
-    };
-    books.push(book);
-    return book;
-}
-const getBook = (id) => books.find(u => u.id === parseInt(id))
+const createBook = name => {
+  const book = {
+    id: uuid.v4(),
+    name
+  };
+  books.push(book);
+  return book;
+};
+const byId = id => b => b.id === id;
+const getBook = id => books.find(byId(id));
 const getAllBooks = () => books;
 const updateBook = (book, id) => {
-    books.filter(b => b.id === id)
-        .forEach(b => b.name = book.name);
-}
+  const foundIdx = books.findIndex(byId(id));
+  books[foundIdx] = book;
+  return book;
+};
 
 module.exports = {
-    createBook,
-    getBook,
-    getAllBooks,
-    updateBook
-}
+  createBook,
+  getBook,
+  getAllBooks,
+  updateBook
+};
