@@ -19,10 +19,11 @@ build:
 	rm -rf node_modules && \
 	npm ci --production&& \
 	rm -rf build && mkdir -p build/function && \
-	rsync -aqvz src build/function/&& \
+	cp -r src build/function/&& \
 	cp index.js build/function/index.js && \
 	cp sam-packaged.yaml build/sam-packaged.yaml && \
-	rsync -aqvz node_modules build/function/
+	cp -r node_modules build/function/ && \
+	cd build && zip -r function.zip function
 
 deploy:
 	$(MAKE) cf-pkg && $(MAKE) cf-deploy

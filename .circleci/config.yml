@@ -119,6 +119,38 @@ jobs:
           command: make deploy-quarkus-api-gw-event-handler-jvm
       - store_artifacts:
           path: /tmp/aws-lambda-sam-performance/quarkus/quarkus-api-gw-event-handler/packaged.yaml
+
+  node-express-build:
+    docker:
+      - image: cimg/node:12.18
+    working_directory: /tmp/aws-lambda-sam-performance
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: make build-node-express
+      - persist_to_workspace:
+          root: /tmp/aws-lambda-sam-performance/
+          paths:
+            - Makefile
+            - nodejs/node-express/*
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express/build/function.zip
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express/build/reports
+      - store_test_results:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express/build/reports/junit/jest
+  node-express-deploy:
+    executor: aws-cli/default
+    working_directory: /tmp/aws-lambda-sam-performance
+    steps:
+      - attach_workspace:
+          at: /tmp/aws-lambda-sam-performance/
+      - aws-cli/setup
+      - run:
+          command: make deploy-node-express
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express/packaged.yaml
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
 workflows:
@@ -189,7 +221,7 @@ workflows:
               only: /node.*/
       - node-express-deploy:
           requires:
-            - quarkus-api-gw-event-handler-build
+            - node-express-build
           filters:
             branches:
               only: /node.*/

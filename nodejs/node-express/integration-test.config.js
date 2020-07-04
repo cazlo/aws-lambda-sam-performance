@@ -2,6 +2,11 @@ const defaultConfig = require('./jest.config');
 
 module.exports = {
   ...defaultConfig,
-  verbose: true,
-  testMatch: ['<rootDir>**/?(*.)+(int).[jt]s?(x)'],
+  collectCoverage: false,
+  projects: [
+    {
+      displayName: 'integration',
+      testMatch: ['<rootDir>/test/**/?(*.)+(int).[jt]s?(x)', '<rootDir>/test/?(*.)+(int).[jt]s?(x)'],
+    },
+  ],
 };
