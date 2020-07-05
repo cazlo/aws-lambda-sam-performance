@@ -151,6 +151,38 @@ jobs:
           command: make deploy-node-express
       - store_artifacts:
           path: /tmp/aws-lambda-sam-performance/nodejs/node-express/packaged.yaml
+
+  node-express-typescript-build:
+    docker:
+      - image: cimg/node:12.18
+    working_directory: /tmp/aws-lambda-sam-performance
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: make build-node-express-typescript
+      - persist_to_workspace:
+          root: /tmp/aws-lambda-sam-performance/
+          paths:
+            - Makefile
+            - nodejs/node-express-typescript/*
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express-typescript/build/function.zip
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express-typescript/build/reports
+      - store_test_results:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express-typescript/build/reports/junit/jest
+  node-express-typescript-deploy:
+    executor: aws-cli/default
+    working_directory: /tmp/aws-lambda-sam-performance
+    steps:
+      - attach_workspace:
+          at: /tmp/aws-lambda-sam-performance/
+      - aws-cli/setup
+      - run:
+          command: make deploy-node-express-typescript
+      - store_artifacts:
+          path: /tmp/aws-lambda-sam-performance/nodejs/node-express-typescript/packaged.yaml
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
 workflows:
@@ -224,6 +256,21 @@ workflows:
       - node-express-deploy:
           requires:
             - node-express-build
+          filters:
+            branches:
+              only:
+                - /node.*/
+                - master
+
+      - node-express-typescript-build:
+          filters:
+            branches:
+              only:
+                - /node.*/
+                - master
+      - node-express-typescript-deploy:
+          requires:
+            - node-express-typescript-build
           filters:
             branches:
               only:

@@ -1,4 +1,4 @@
-appName = node-express
+appName = node-express-typescript
 artifactBucketName = sam-perf-analysis-artifacts
 templateCfFileName = sam-packaged.yaml
 templateCfUnpackagedFileName = sam.yaml
