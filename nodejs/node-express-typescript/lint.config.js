@@ -1,20 +1,15 @@
 module.exports = {
   projects: [
     {
-      displayName: 'lambda',
-      runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/index.js'],
+      displayName: "main",
+      runner: "jest-runner-eslint",
+      testMatch: ["<rootDir>/src/**/*.(j|t)s", "<rootDir>/src/*.(j|t)s"],
     },
     {
-      displayName: 'main',
-      runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/src/**/*.js', '<rootDir>/src/*.js'],
-    },
-    {
-      displayName: 'test',
-      runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/test/**/*.js', '<rootDir>/test/*.js'],
+      displayName: "test",
+      runner: "jest-runner-eslint",
+      testMatch: ["<rootDir>/test/**/*.(j|t)s", "<rootDir>/test/*.(j|t)s"],
     },
   ],
-  watchPlugins: ['jest-runner-eslint/watch-fix'],
+  watchPlugins: ["jest-runner-eslint/watch-fix"],
 };

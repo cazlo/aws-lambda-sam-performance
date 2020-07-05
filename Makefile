@@ -26,6 +26,10 @@ build-node-express:
 		$(MAKE) -C nodejs/node-express build
 deploy-node-express:
 		$(MAKE) -C nodejs/node-express deploy
+build-node-express-typescript:
+		$(MAKE) -C nodejs/node-express-typescript build
+deploy-node-express-typescript:
+		$(MAKE) -C nodejs/node-express-typescript deploy
 
 load-all-remote:
 		$(MAKE) -C load-test load-all-remote
@@ -39,4 +43,5 @@ build-all:
 	$(MAKE) build-micronaut-1-3-6 && \
 	$(MAKE) build-quarkus-api-gw-proxy && \
 	$(MAKE) build-quarkus-api-gw-event-handler && \
-	$(MAKE) build-node-express
+	$(MAKE) build-node-express && \
+	$(MAKE) build-node-express-typescript

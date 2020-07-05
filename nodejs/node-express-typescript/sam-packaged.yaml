@@ -14,7 +14,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./build/function
-      Handler: index.handler
+      Handler: lambda.handler
       MemorySize: 128
       Runtime: nodejs12.x
       Timeout: 15

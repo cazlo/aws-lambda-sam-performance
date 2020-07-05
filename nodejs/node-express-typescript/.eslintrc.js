@@ -1,37 +1,20 @@
 module.exports = {
-  "extends": [
-    "eslint:recommended",
-    "airbnb-base",
-    "prettier"
-  ],
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "plugins": [
-    "prettier"
-  ],
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "impliedStrict": true,
-    }
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   "rules": {
-    "max-len": ["error", {"code": 120}],
-    "prettier/prettier": "error",
-    "no-restricted-syntax": "off"
-  },
-  overrides: [
-    Object.assign(
-        {
-          files: [ '**/*.test.js' ],
-          env: { jest: true },
-          plugins: [ 'jest' ],
-        },
-        require('eslint-plugin-jest').configs.recommended
-    )
-  ]
-}
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-inferrable-types": [
+      "warn", {
+        "ignoreParameters": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "warn"
+  }
+};

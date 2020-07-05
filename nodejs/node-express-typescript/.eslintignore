@@ -1,5 +1,5 @@
 /node_modules/
 /build/
-/config/
 /scripts/
 /coverage/
+**/*.d.ts
