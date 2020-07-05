@@ -9,10 +9,10 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
-
-  NodeExpressFunction:
+  Proxy:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Ref AWS::StackName
       CodeUri: ./build/function
       Handler: lambda.handler
       MemorySize: 128

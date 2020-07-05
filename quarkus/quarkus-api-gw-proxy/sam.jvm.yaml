@@ -6,11 +6,11 @@ Globals:
     EndpointConfiguration: REGIONAL
     BinaryMediaTypes:
       - "*/*"
-
 Resources:
-  QuarkusApiGwProxy:
+  Proxy:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Ref AWS::StackName
       Handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
       Runtime: java11
       CodeUri: target/quarkus-api-gw-proxy-1.0-SNAPSHOT-runner.jar

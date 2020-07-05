@@ -9,10 +9,10 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
-
-  LambdaQuarkusFunction:
+  Proxy:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Ref AWS::StackName
       Handler: not.used.in.provided.runtime
       Runtime: provided
       CodeUri: target/function.zip
