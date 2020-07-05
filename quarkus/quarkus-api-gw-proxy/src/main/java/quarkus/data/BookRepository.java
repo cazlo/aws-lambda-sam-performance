@@ -15,16 +15,24 @@ public class BookRepository {
         add(defaultBook);
     }};
 
-    public BookSaved saveBook(Book toSave){
+    public Optional<BookSaved> createBook(Book toSave){
         BookSaved saved = new BookSaved();
         saved.setIsbn(UUID.randomUUID().toString());
         saved.setName(toSave.getName());
-        return saved;
+        return Optional.of(saved);
     }
 
     public Optional<BookSaved> findById(String id){
         return books.stream()
                 .filter(b -> b.getIsbn().equals(id))
                 .findFirst();
+    }
+
+    public Optional<BookSaved> updateBook(Book book, String id){
+         return books.stream()
+                 .filter(b -> b.getIsbn().equals(id))
+                 .peek(b -> b.setName(book.getName()))
+                 .findFirst();
+
     }
 }

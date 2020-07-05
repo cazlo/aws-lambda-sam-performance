@@ -14,6 +14,10 @@ public class Book {
     public Book() {
     }
 
+    public Book(@NotNull @NotBlank String name) {
+        this.name = name;
+    }
+
     @NotNull
     public String getName() {
         return name;
