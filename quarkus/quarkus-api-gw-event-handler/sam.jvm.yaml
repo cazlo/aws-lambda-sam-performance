@@ -18,22 +18,25 @@ Resources:
       CodeUri: target/quarkus-api-gw-event-handler-1.0-SNAPSHOT-runner.jar
       MemorySize: 256
       Timeout: 15
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: Users
       Events:
         PostBook:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayApi
             Path: /book
-            Method: PUT
+            Method: POST
         GetBookById:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayApi
             Path: /book/{id}
             Method: GET
+        PutBookById:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGatewayApi
+            Path: /book/{id}
+            Method: PUT
 
 Outputs:
   ApiUrl:

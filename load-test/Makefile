@@ -1,7 +1,8 @@
-users = 15
+users = 1
 userHatchRate = 2
-testRunTime = 1m
-waitTime = 5m
+testRunTime = 5s
+waitTime = 10m
+testIterations = 20
 
 micronaut2api = yvxxfw2nf2
 micronaut136api = 6ug86qoohk
@@ -13,51 +14,65 @@ nodeExpressApi = ombtv0cn50
 nodeExpressTypescriptApi = atdz8guafb
 
 load-local:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u 2 -r 2 \
 		--host http://127.0.0.1:3000
 
 load-micronaut-2:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(micronaut2api).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> micronaut-2.log 2>&1
 
 load-micronaut-1-3-6:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(micronaut136api).execute-api.us-west-2.amazonaws.com/Prod \
-        --run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> micronaut-1-3-6.log 2>&1
 
 load-quarkus-proxy:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusProxyApi).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-proxy.log 2>&1
 
 load-quarkus-proxy-jvm:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusProxyJvmApi).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-proxy-jvm.log 2>&1
 
 load-quarkus-event-handler:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusEventHandlerApi).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-event-handler.log 2>&1
 
 load-quarkus-event-handler-jvm:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusEventHandlerJvmApi).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-event-handler-jvm.log 2>&1
 
 load-node-express:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(nodeExpressApi).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> node-express.log 2>&1
+
+load-node-express-typescript:
+	docker run --rm --network host -v $(CURDIR):/mnt/locust -d locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+ 		--headless -u $(users) -r $(userHatchRate) \
+ 		--host https://$(nodeExpressTypescriptApi).execute-api.us-west-2.amazonaws.com/Prod \
+ 		--only-summary \
+ 		--run-time $(testRunTime) | xargs docker logs -f >> node-express-typescript.log 2>&1
 
 load-node-express-typescript:
 	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
@@ -76,8 +91,6 @@ load-all-remote:
 	$(MAKE) load-node-express-typescript
 
 spiky-load-test:
-	number=1 ; while [[ $$number -le 10 ]] ; do \
-  		((number = number + 1)); \
-		$(MAKE) load-all-remote; \
-		sleep $(waitTime);
+	i=0; while [ "$$i" -le $(testIterations) ]; do \
+        $(MAKE) load-all-remote; sleep $(waitTime); i=$$((i + 10));\
 	done

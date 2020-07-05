@@ -31,12 +31,23 @@ public class ExampleController implements RequestHandler<APIGatewayProxyRequestE
             case "GET":
                 return bookRepository.findById(request.getPathParameters().get("id"))
                         .map(b -> response(200, b))
-                        .orElse(response(404, "nope not found"));
+                        .orElseGet(() -> response(404, "nope not found"));
             case "PUT":
                 try {
                     var book = objectMapper.readValue(request.getBody(), Book.class);
-                    var savedBook = bookRepository.saveBook(book);
+                    var savedBook = bookRepository.createBook(book);
                     return response(201, savedBook);
+                } catch (JsonProcessingException e) {
+                    return response(400, "you dun goofed up and sent a bad message");
+                }
+            case "POST":
+                try {
+                    var book = objectMapper.readValue(request.getBody(), Book.class);
+                    var id = request.getPathParameters().get("id");
+                    return bookRepository.findById(id)
+                            .map(b -> bookRepository.updateBook(book, id))
+                            .map(b -> response(200, b))
+                            .orElseGet(() -> response(404, "nope not found"));
                 } catch (JsonProcessingException e) {
                     return response(400, "you dun goofed up and sent a bad message");
                 }

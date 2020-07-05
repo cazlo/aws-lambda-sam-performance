@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller("/book")
 @Validated
@@ -23,7 +24,7 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @Post("/")
+    @Post
     public BookSaved putBook(@Valid @Body Book book) {
         return bookRepository.createBook(book);
     }
@@ -32,13 +33,13 @@ public class BookController {
     public HttpResponse<BookSaved> updateBookById(@PathVariable(name = "id") String id, @Valid @Body Book book) {
         return bookRepository.update(id, book)
                 .map(HttpResponse::ok)
-                .orElse(HttpResponse.notFound());
+                .orElseGet(HttpResponse::notFound);
     }
 
     @Get("/{id}")
     public HttpResponse<BookSaved> getBookById(@PathVariable(name = "id") String id) {
         return bookRepository.findById(id)
                 .map(HttpResponse::ok)
-                .orElse(HttpResponse.notFound());
+                .orElseGet(HttpResponse::notFound);
     }
 }
