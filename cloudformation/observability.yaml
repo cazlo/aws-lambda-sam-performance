@@ -1,0 +1,494 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Resources which aim to observe the microservice cluster's key performance indicators
+Resources:
+    Type: AWS::CloudWatch:Dashbaord
+    Properties:
+        DashboardName: Service KPI Dashboard
+        DashboardBody: |
+{
+    "widgets": [
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/ApiGateway", "Latency", "ApiName", "micronaut-two", { "stat": "Average", "label": "avg", "color": "#2ca02c" } ],
+                    [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                    [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "p95",
+                "period": 1,
+                "title": "Micronaut 2 Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/Lambda", "Duration", "FunctionName", "micronaut-two-MyServiceFunction-1A380C3B6S5I4", { "color": "#2ca02c", "stat": "Average" } ],
+                    [ "...", { "color": "#bcbd22", "stat": "p95" } ],
+                    [ "...", { "color": "#ff7f0e" } ],
+                    [ "..." ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "Micronaut 2 Lamda Duration",
+                "stat": "p99",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "title": "Micronaut 2 Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 0,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\n\n\n\n\n\n\nTotalColdStartDuration\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\n\n\n\n\n\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "Micronaut 2 Cold Starts",
+                "view": "table"
+            }
+        },
+
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/ApiGateway", "Latency", "ApiName", "micronaut-one-three-six", { "color": "#2ca02c", "label": "avg" } ],
+                    [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
+                    [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "Average",
+                "period": 1,
+                "title": "Micronaut 1.3.6 Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/Lambda", "Duration", "FunctionName", "micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+                    [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                    [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "Micronaut 1.3.6 Lamda Duration",
+                "stat": "p95",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "Micronaut 1.3.6 Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "Micronaut 1.3.6 Cold Starts",
+                "view": "table"
+            }
+        },
+
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/ApiGateway", "Latency", "ApiName", "node-express", { "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "Average",
+                "period": 1,
+                "title": "Node Express Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/Lambda", "Duration", "FunctionName", "node-express-NodeExpressFunction-DJ8PCVSTB14E", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "Node Express Lambda Duration",
+                "stat": "p95",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "Node Express Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "Node Express Cold Starts",
+                "view": "table"
+            }
+        },
+
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/ApiGateway", "Latency", "ApiName", "quarkus-api-gw-event-handler", { "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "Average",
+                "period": 1,
+                "title": "quarkus-api-gw-event-handler Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "quarkus-api-gw-event-handler Lambda Duration",
+                "stat": "p95",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-event-handler Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-event-handler Cold Starts",
+                "view": "table"
+            }
+        },
+
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/ApiGateway", "Latency", "ApiName", "quarkus-api-gw-event-handler-jvm", { "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "Average",
+                "period": 1,
+                "title": "quarkus-api-gw-event-handler-jvm Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "quarkus-api-gw-event-handler-jvm Lambda Duration",
+                "stat": "p95",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-event-handler-jvm Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-event-handler-jvm Cold Starts",
+                "view": "table"
+            }
+        },
+
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/ApiGateway", "Latency", "ApiName", "quarkus-api-gw-proxy", { "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "Average",
+                "period": 1,
+                "title": "quarkus-api-gw-proxy Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "quarkus-api-gw-proxy Lambda Duration",
+                "stat": "p95",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-proxy Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-proxy Cold Starts",
+                "view": "table"
+            }
+        },
+
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/ApiGateway", "Latency", "ApiName", "quarkus-api-gw-proxy-jvm", { "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "stat": "Average",
+                "period": 1,
+                "title": "quarkus-api-gw-proxy-jvm Latency"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+                [ "...", { "color": "#bcbd22", "label": "p95" } ],
+                [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-west-2",
+                "title": "quarkus-api-gw-proxy-jvm Lambda Duration",
+                "stat": "p95",
+                "period": 5
+            }
+        },
+        {
+            "type": "log",
+            "x": 12,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-proxy-jvm Memory Use",
+                "view": "table"
+            }
+        },
+        {
+            "type": "log",
+            "x": 18,
+            "y": 6,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+                "region": "us-west-2",
+                "stacked": false,
+                "title": "quarkus-api-gw-proxy-jvm Cold Starts",
+                "view": "table"
+            }
+        }
+    ]
+}
