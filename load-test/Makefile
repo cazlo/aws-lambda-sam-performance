@@ -1,8 +1,8 @@
-users = 1
+users = 7
 userHatchRate = 2
-testRunTime = 5s
-waitTime = 10m
-testIterations = 20
+testRunTime = 30s
+waitTime = 15m
+testIterations = 5
 
 micronaut2api = yvxxfw2nf2
 micronaut136api = 6ug86qoohk
@@ -19,66 +19,60 @@ load-local:
 		--host http://127.0.0.1:3000
 
 load-micronaut-2:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(micronaut2api).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> micronaut-2.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> micronaut-2.log 2>&1'
 
 load-micronaut-1-3-6:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(micronaut136api).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> micronaut-1-3-6.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> micronaut-1-3-6.log 2>&1'
 
 load-quarkus-proxy:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusProxyApi).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-proxy.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> quarkus-proxy.log 2>&1'
 
 load-quarkus-proxy-jvm:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusProxyJvmApi).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-proxy-jvm.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> quarkus-proxy-jvm.log 2>&1'
 
 load-quarkus-event-handler:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusEventHandlerApi).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-event-handler.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> quarkus-event-handler.log 2>&1'
 
 load-quarkus-event-handler-jvm:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(quarkusEventHandlerJvmApi).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> quarkus-event-handler-jvm.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> quarkus-event-handler-jvm.log 2>&1'
 
 load-node-express:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
 		--headless -u $(users) -r $(userHatchRate) \
 		--host https://$(nodeExpressApi).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> node-express.log 2>&1
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> node-express.log 2>&1'
 
 load-node-express-typescript:
-	docker run --rm --network host -v $(CURDIR):/mnt/locust -d locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
+	docker run --rm -d --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
  		--headless -u $(users) -r $(userHatchRate) \
  		--host https://$(nodeExpressTypescriptApi).execute-api.us-west-2.amazonaws.com/Prod \
  		--only-summary \
- 		--run-time $(testRunTime) | xargs docker logs -f >> node-express-typescript.log 2>&1
-
-load-node-express-typescript:
-	docker run -p 8089:8089 --network host -v $(CURDIR):/mnt/locust locustio/locust:1.0.2 -f /mnt/locust/locustfile.py \
-		--headless -u $(users) -r $(userHatchRate) \
-		--host https://$(nodeExpressTypescriptApi).execute-api.us-west-2.amazonaws.com/Prod \
-		--run-time $(testRunTime)
+ 		--run-time $(testRunTime) | xargs -I % sh -c 'docker logs -f % >> node-express-typescript.log 2>&1'
 
 load-all-remote:
 	$(MAKE) load-micronaut-2 && \
@@ -90,7 +84,29 @@ load-all-remote:
 	$(MAKE) load-node-express && \
 	$(MAKE) load-node-express-typescript
 
-spiky-load-test:
+load-test-all-remote-for-a-while:
 	i=0; while [ "$$i" -le $(testIterations) ]; do \
-        $(MAKE) load-all-remote; sleep $(waitTime); i=$$((i + 10));\
+        $(MAKE) load-all-remote; echo "Sleeping for a bit"; sleep $(waitTime); i=$$((i + 10));\
 	done
+
+clean:
+	rm -f *.log
+
+quick-deploy-smokecheck:
+	$(MAKE) -e testRunTime=5s clean load-all-remote
+
+datetime=$(shell date --iso=seconds)
+spiky-load-test:
+	$(MAKE) -e testRunTime=60s users=10 waitTime=15m testIterations=20 clean load-test-all-remote-for-a-while && \
+	mkdir -p test_results/spiky-load-test/$(datetime) && \
+	mv *.log test_results/spiky-load-test/$(datetime)
+
+quick-ramp-load-test:
+	$(MAKE) -e testRunTime=20s users=100 userHatchRate=50 waitTime=15m testIterations=20 clean load-test-all-remote-for-a-while && \
+	mkdir -p test_results/quick-ramp-load-test/$(datetime) && \
+	mv *.log test_results/quick-ramp-load-test/$(datetime)
+
+consistent-throughput-load-test:
+	$(MAKE) -e testRunTime=60m users=3 userHatchRate=3 waitTime=15m testIterations=2 clean load-test-all-remote-for-a-while && \
+	mkdir -p test_results/quick-ramp-load-test/$(datetime) && \
+	mv *.log test_results/quick-ramp-load-test/$(datetime)
