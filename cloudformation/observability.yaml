@@ -36,7 +36,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "micronaut-two-MyServiceFunction-1A380C3B6S5I4", { "color": "#2ca02c", "stat": "Average" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "micronaut-two", { "color": "#2ca02c", "stat": "Average" } ],
       [ "...", { "color": "#bcbd22", "stat": "p95" } ],
       [ "...", { "color": "#ff7f0e" } ],
       [ "..." ]
@@ -56,7 +56,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/micronaut-two' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "title": "Micronaut 2 Memory Use",
       "view": "table"
@@ -69,14 +69,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\n\n\n\n\n\n\nTotalColdStartDuration\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\n\n\n\n\n\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/micronaut-two' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\n\n\n\n\n\n\nTotalColdStartDuration\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\n\n\n\n\n\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Micronaut 2 Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -105,7 +104,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "micronaut-one-three-six", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
@@ -124,7 +123,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/micronaut-one-three-six' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
       "title": "Micronaut 1.3.6 Memory Use",
@@ -138,14 +137,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/micronaut-one-three-six' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Micronaut 1.3.6 Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -174,7 +172,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "node-express-NodeExpressFunction-DJ8PCVSTB14E", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "node-express", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
@@ -193,7 +191,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/node-express' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
       "title": "Node Express Memory Use",
@@ -207,14 +205,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/node-express' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Node Express Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -223,7 +220,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/ApiGateway", "Latency", "ApiName", "node-express", { "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/ApiGateway", "Latency", "ApiName", "node-express-typescript", { "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "stat": "p95", "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "stat": "p99", "color": "#ff7f0e", "label": "p99" } ]
       ],
@@ -232,7 +229,7 @@ Resources:
       "region": "us-west-2",
       "stat": "Average",
       "period": 1,
-      "title": "Node Express Latency"
+      "title": "Node Express Typescript Latency"
     }
   },
   {
@@ -243,14 +240,14 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "node-express-NodeExpressFunction-DJ8PCVSTB14E", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "node-express-typescript", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
       "view": "timeSeries",
       "stacked": false,
       "region": "us-west-2",
-      "title": "Node Express Lambda Duration",
+      "title": "Node Express Typescript Lambda Duration",
       "stat": "p95",
       "period": 5
     }
@@ -262,10 +259,10 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/node-express-typescript' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
-      "title": "Node Express Memory Use",
+      "title": "Node Express Typescript Memory Use",
       "view": "table"
     }
   },
@@ -276,14 +273,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/node-express-typescript' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
-      "title": "Node Express Cold Starts",
+      "title": "Node Express Typescript Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -312,7 +308,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-event-handler", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
@@ -331,7 +327,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-event-handler Memory Use",
@@ -345,14 +341,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-event-handler Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -381,7 +376,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-event-handler-jvm", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
@@ -400,7 +395,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-event-handler-jvm Memory Use",
@@ -414,14 +409,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-event-handler-jvm Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -450,7 +444,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-proxy", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
@@ -469,7 +463,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-proxy Memory Use",
@@ -483,14 +477,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-proxy Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "metric",
     "x": 0,
@@ -519,7 +512,7 @@ Resources:
     "height": 6,
     "properties": {
       "metrics": [
-      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
+      [ "AWS/Lambda", "Duration", "FunctionName", "quarkus-api-gw-proxy-jvm", { "stat": "Average", "color": "#2ca02c", "label": "avg" } ],
       [ "...", { "color": "#bcbd22", "label": "p95" } ],
       [ "...", { "color": "#ff7f0e", "stat": "p99", "label": "p99" } ]
       ],
@@ -538,7 +531,7 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| filter @message like \"REPORT\"\n| stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99,  stddev(MBused) as dev by bin(60s)\n| display cnt, min, avg, p75, p95, p99, dev\n#| sort asc\n#| limit 20",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-proxy-jvm Memory Use",
@@ -552,14 +545,13 @@ Resources:
     "width": 6,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
+      "query": "SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\nTotalColdStartDuration\n\n\n\n   | filter ispresent(@duration) and ispresent(InitDuration)\n\n\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\n\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99,  stddev(@duration) as dev by bin(30s)\n\n\n\n   | display cnt, min, avg, p75, p95, p99, dev\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "quarkus-api-gw-proxy-jvm Cold Starts",
       "view": "table"
     }
   },
-
   {
     "type": "log",
     "x": 0,
@@ -567,7 +559,7 @@ Resources:
     "width": 12,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | SOURCE '/aws/lambda/node-express-typescript-NodeExpressFunction-1HMRHXOQFGM15' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n   | parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration, @log\n   | filter ispresent(@duration) and ispresent(InitDuration)\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg, pct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by bin(1w), App\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n   | sort p75\n",
+      "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n   | parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration, @log\n   | filter ispresent(@duration) and ispresent(InitDuration)\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg, pct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by bin(1w), App\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n   | sort p75\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Cold Lambda Duration",
@@ -581,7 +573,7 @@ Resources:
     "width": 12,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | SOURCE '/aws/lambda/node-express-typescript-NodeExpressFunction-1HMRHXOQFGM15' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n   | parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration\n   | filter ispresent(@duration) and ispresent(InitDuration)\n   | stats count() as cnt, min(InitDuration) as min, avg(InitDuration) as avg, pct(InitDuration, 75) as p75, pct(InitDuration, 95) as p95, pct(InitDuration, 99) as p99, max(InitDuration) as mx, stddev(InitDuration) as dev by bin(1w), App\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n   | sort p75\n",
+      "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n   | parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration\n   | filter ispresent(@duration) and ispresent(InitDuration)\n   | stats count() as cnt, min(InitDuration) as min, avg(InitDuration) as avg, pct(InitDuration, 75) as p75, pct(InitDuration, 95) as p95, pct(InitDuration, 99) as p99, max(InitDuration) as mx, stddev(InitDuration) as dev by bin(1w), App\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n   | sort p75\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Cold start Init Duration",
@@ -595,7 +587,7 @@ Resources:
     "width": 12,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | SOURCE '/aws/lambda/node-express-typescript-NodeExpressFunction-1HMRHXOQFGM15' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\n\n\n\n\n\n\nTotalColdStartDuration, @log\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | filter ispresent(@duration) and ispresent(TotalColdStartDuration)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | stats count() as cnt, min(TotalColdStartDuration) as min,\n\n\n\n\n\n\n\navg(TotalColdStartDuration) as avg, pct(TotalColdStartDuration, 75) as p75, pct(TotalColdStartDuration, 95) as p95, pct(TotalColdStartDuration, 99) as p99, max(TotalColdStartDuration) as mx, stddev(TotalColdStartDuration) as dev by bin(1w), App\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | sort p75\n",
+      "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\n\n\n\n\n\n\nTotalColdStartDuration, @log\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | filter ispresent(@duration) and ispresent(TotalColdStartDuration)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | stats count() as cnt, min(TotalColdStartDuration) as min,\n\n\n\n\n\n\n\navg(TotalColdStartDuration) as avg, pct(TotalColdStartDuration, 75) as p75, pct(TotalColdStartDuration, 95) as p95, pct(TotalColdStartDuration, 99) as p99, max(TotalColdStartDuration) as mx, stddev(TotalColdStartDuration) as dev by bin(1w), App\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | sort p75\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Total Cold Runtimes",
@@ -609,7 +601,7 @@ Resources:
     "width": 12,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | SOURCE '/aws/lambda/node-express-typescript-NodeExpressFunction-1HMRHXOQFGM15' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\nTotalColdStartDuration, @log\n\n   | filter ispresent(@duration) and not ispresent(InitDuration)\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by bin(1w), App\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n   | sort p75\n",
+      "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\nTotalColdStartDuration, @log\n\n   | filter ispresent(@duration) and not ispresent(InitDuration)\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by bin(1w), App\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n   | sort p75\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Non-Cold Runtimes",
@@ -623,7 +615,7 @@ Resources:
     "width": 12,
     "height": 6,
     "properties": {
-      "query": "SOURCE '/aws/lambda/micronaut-two-MyServiceFunction-1A380C3B6S5I4' | SOURCE '/aws/lambda/micronaut-one-three-six-MyServiceFunction-138ZUF74X6EVR' | SOURCE '/aws/lambda/node-express-NodeExpressFunction-DJ8PCVSTB14E' | SOURCE '/aws/lambda/node-express-typescript-NodeExpressFunction-1HMRHXOQFGM15' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-1DWHOA3UFAQQQ' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-LambdaQuarkusFunction-GNEOAFFM1CVR' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm-QuarkusApiGwProxy-DI7U9QGDXJIA' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-LambdaQuarkusFunction-4STRIZDHUCLO' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99, max(MBused) as mx, stddev(MBused) as dev by bin(1w), App\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | sort p75\n",
+      "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99, max(MBused) as mx, stddev(MBused) as dev by bin(1w), App\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | sort p75\n",
       "region": "us-west-2",
       "stacked": false,
       "title": "Memory Usage",

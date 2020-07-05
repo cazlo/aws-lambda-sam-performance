@@ -86,14 +86,15 @@ load-all-remote:
 
 load-test-all-remote-for-a-while:
 	i=0; while [ "$$i" -le $(testIterations) ]; do \
-        $(MAKE) load-all-remote; echo "Sleeping for a bit"; sleep $(waitTime); i=$$((i + 10));\
-	done
+        $(MAKE) load-all-remote; echo "Sleeping for a bit"; sleep $(waitTime); i=$$((i + 1));\
+	done && \
+	echo "Load Test Completed :D"
 
 clean:
 	rm -f *.log
 
 quick-deploy-smokecheck:
-	$(MAKE) -e testRunTime=5s clean load-all-remote
+	$(MAKE) -e testRunTime=5s testIterations=1 waitTime=1s clean load-test-all-remote-for-a-while
 
 datetime=$(shell date --iso=seconds)
 spiky-load-test:
