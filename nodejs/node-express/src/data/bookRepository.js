@@ -13,7 +13,7 @@ const createBook = name => {
     id: uuid.v4(),
     name
   };
-  books.push(book);
+  // books.push(book);
   return book;
 };
 const byId = id => b => b.id === id;

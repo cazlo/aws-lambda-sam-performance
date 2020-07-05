@@ -1,12 +1,15 @@
-const defaultConfig = require('./jest.config');
+const defaultConfig = require("./jest.config");
 
 module.exports = {
   ...defaultConfig,
   collectCoverage: false,
   projects: [
     {
-      displayName: 'integration',
-      testMatch: ['<rootDir>/test/**/?(*.)+(int).[jt]s?(x)', '<rootDir>/test/?(*.)+(int).[jt]s?(x)'],
+      displayName: "integration",
+      testMatch: ["<rootDir>/test/**/?(*.)+(int).[jt]s?(x)", "<rootDir>/test/?(*.)+(int).[jt]s?(x)"],
+      transform: {
+        "^.+\\.(ts|tsx)$": "ts-jest"
+      },
     },
   ],
 };

@@ -3,7 +3,7 @@ module.exports = {
   // testMatch: defaults.testMatch,
   collectCoverage: true,
   coverageDirectory: 'build/reports/coverage',
-  coveragePathIgnorePatterns: ['/node_modules/', 'src/data/*'],
+  coveragePathIgnorePatterns: ['/node_modules/'],
   reporters: [
     'default',
     [

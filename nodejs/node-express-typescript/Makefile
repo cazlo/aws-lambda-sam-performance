@@ -16,11 +16,10 @@ test:
 
 build:
 	$(MAKE) test && \
-	rm -rf node_modules && \
-	npm ci --production&& \
 	rm -rf build && mkdir -p build/function && \
-	cp -r src build/function/&& \
-	cp index.js build/function/index.js && \
+	npm run build-ts && \
+	rm -rf node_modules && \
+	npm ci --production && \
 	cp sam-packaged.yaml build/sam-packaged.yaml && \
 	cp -r node_modules build/function/ && \
 	cd build && zip -r function.zip function
