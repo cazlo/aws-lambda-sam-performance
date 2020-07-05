@@ -5,7 +5,7 @@ class UserBehavior(HttpUser):
 
     @task
     def postBook(self):
-        self.client.post(url="/book", data='{"name":"test"}', name="putBook", headers={"Content-Type": "Application/JSON"})
+        self.client.post(url="/book", data='{"name":"test"}', name="postBook", headers={"Content-Type": "Application/JSON"})
 
     @task
     def putBook(self):
