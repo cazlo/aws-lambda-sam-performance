@@ -1,0 +1,93 @@
+[2020-07-05 22:38:04,766] drew-Virtual-Machine/INFO/locust.main: Run time limit set to 60 seconds
+[2020-07-05 22:38:04,766] drew-Virtual-Machine/INFO/locust.main: Starting Locust 1.0.2
+[2020-07-05 22:38:04,766] drew-Virtual-Machine/INFO/locust.runners: Hatching and swarming 10 users at the rate 2 users/s (0 users already running)...
+[2020-07-05 22:38:09,274] drew-Virtual-Machine/INFO/locust.runners: All users hatched: UserBehavior: 10 (0 already running)
+[2020-07-05 22:39:04,554] drew-Virtual-Machine/INFO/locust.main: Time limit reached. Stopping Locust.
+[2020-07-05 22:39:04,554] drew-Virtual-Machine/INFO/locust.main: Shutting down (exit code 1), bye.
+[2020-07-05 22:39:04,554] drew-Virtual-Machine/INFO/locust.main: Cleaning up runner...
+[2020-07-05 22:39:04,555] drew-Virtual-Machine/INFO/locust.main: Running teardowns...
+ Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s failures/s
+--------------------------------------------------------------------------------------------------------------------------------------------
+ GET getBook                                                      346     0(0.00%)      41      27     307  |      33    5.79    0.00
+ POST putBook                                                     345 345(100.00%)      51      31     809  |      38    5.78    5.78
+ PUT putBook                                                      356     0(0.00%)      37      26     189  |      33    5.96    0.00
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregated                                                      1047  345(32.95%)      43      26     809  |      35   17.54    5.78
+
+Percentage of the requests completed within given times
+ Type                 Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100%
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ GET                  getBook                                                           346     33     35     38     42     53     68    130    280    310    310    310
+ POST                 putBook                                                           345     38     44     49     55     76     94    130    170    810    810    810
+ PUT                  putBook                                                           356     33     35     37     38     46     54     77    130    190    190    190
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ None                 Aggregated                                                       1047     35     37     41     44     58     78    120    170    670    810    810
+
+Error report
+ # occurrences      Error                                                                                               
+--------------------------------------------------------------------------------------------------------------------------------------------
+ 345                POST putBook: "HTTPError('502 Server Error: Bad Gateway for url: putBook')"                         
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+[2020-07-05 23:01:11,098] drew-Virtual-Machine/INFO/locust.main: Run time limit set to 60 seconds
+[2020-07-05 23:01:11,098] drew-Virtual-Machine/INFO/locust.main: Starting Locust 1.0.2
+[2020-07-05 23:01:11,099] drew-Virtual-Machine/INFO/locust.runners: Hatching and swarming 10 users at the rate 2 users/s (0 users already running)...
+[2020-07-05 23:01:15,608] drew-Virtual-Machine/INFO/locust.runners: All users hatched: UserBehavior: 10 (0 already running)
+[2020-07-05 23:02:10,880] drew-Virtual-Machine/INFO/locust.main: Time limit reached. Stopping Locust.
+[2020-07-05 23:02:10,881] drew-Virtual-Machine/INFO/locust.main: Shutting down (exit code 1), bye.
+[2020-07-05 23:02:10,881] drew-Virtual-Machine/INFO/locust.main: Cleaning up runner...
+[2020-07-05 23:02:10,881] drew-Virtual-Machine/INFO/locust.main: Running teardowns...
+ Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s failures/s
+--------------------------------------------------------------------------------------------------------------------------------------------
+ GET getBook                                                      341     0(0.00%)      43      25    2376  |      32    5.70    0.00
+ POST putBook                                                     318 318(100.00%)      74      30    3145  |      38    5.32    5.32
+ PUT putBook                                                      363     0(0.00%)      59      26    3056  |      33    6.07    0.00
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregated                                                      1022  318(31.12%)      58      25    3145  |      34   17.10    5.32
+
+Percentage of the requests completed within given times
+ Type                 Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100%
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ GET                  getBook                                                           341     32     33     34     35     44     61    110    130   2400   2400   2400
+ POST                 putBook                                                           318     38     45     51     55     68     89    290    770   3100   3100   3100
+ PUT                  putBook                                                           363     33     35     36     38     46     60    120    260   3100   3100   3100
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ None                 Aggregated                                                       1022     34     36     39     42     56     71    120    290   3100   3100   3100
+
+Error report
+ # occurrences      Error                                                                                               
+--------------------------------------------------------------------------------------------------------------------------------------------
+ 318                POST putBook: "HTTPError('502 Server Error: Bad Gateway for url: putBook')"                         
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+[2020-07-05 23:24:17,443] drew-Virtual-Machine/INFO/locust.main: Run time limit set to 60 seconds
+[2020-07-05 23:24:17,443] drew-Virtual-Machine/INFO/locust.main: Starting Locust 1.0.2
+[2020-07-05 23:24:17,444] drew-Virtual-Machine/INFO/locust.runners: Hatching and swarming 10 users at the rate 2 users/s (0 users already running)...
+[2020-07-05 23:24:21,965] drew-Virtual-Machine/INFO/locust.runners: All users hatched: UserBehavior: 10 (0 already running)
+[2020-07-05 23:25:17,219] drew-Virtual-Machine/INFO/locust.main: Time limit reached. Stopping Locust.
+[2020-07-05 23:25:17,221] drew-Virtual-Machine/INFO/locust.main: Shutting down (exit code 1), bye.
+[2020-07-05 23:25:17,221] drew-Virtual-Machine/INFO/locust.main: Cleaning up runner...
+[2020-07-05 23:25:17,221] drew-Virtual-Machine/INFO/locust.main: Running teardowns...
+ Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s failures/s
+--------------------------------------------------------------------------------------------------------------------------------------------
+ GET getBook                                                      352     0(0.00%)      40      27     961  |      32    5.89    0.00
+ POST putBook                                                     341 341(100.00%)      59      28    1573  |      38    5.71    5.71
+ PUT putBook                                                      349     0(0.00%)      52      26    2633  |      33    5.84    0.00
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregated                                                      1042  341(32.73%)      50      26    2633  |      34   17.44    5.71
+
+Percentage of the requests completed within given times
+ Type                 Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100%
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ GET                  getBook                                                           352     32     34     35     37     47     64     98    130    960    960    960
+ POST                 putBook                                                           341     38     46     52     55     75     99    300    690   1600   1600   1600
+ PUT                  putBook                                                           349     33     35     36     39     51     87    150    180   2600   2600   2600
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ None                 Aggregated                                                       1042     34     37     40     45     61     85    130    300   1800   2600   2600
+
+Error report
+ # occurrences      Error                                                                                               
+--------------------------------------------------------------------------------------------------------------------------------------------
+ 341                POST putBook: "HTTPError('502 Server Error: Bad Gateway for url: putBook')"                         
+--------------------------------------------------------------------------------------------------------------------------------------------
+

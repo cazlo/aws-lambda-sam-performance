@@ -1,0 +1,75 @@
+[2020-07-05 22:34:01,671] drew-Virtual-Machine/INFO/locust.main: Run time limit set to 60 seconds
+[2020-07-05 22:34:01,671] drew-Virtual-Machine/INFO/locust.main: Starting Locust 1.0.2
+[2020-07-05 22:34:01,671] drew-Virtual-Machine/INFO/locust.runners: Hatching and swarming 10 users at the rate 2 users/s (0 users already running)...
+[2020-07-05 22:34:06,179] drew-Virtual-Machine/INFO/locust.runners: All users hatched: UserBehavior: 10 (0 already running)
+[2020-07-05 22:35:01,452] drew-Virtual-Machine/INFO/locust.main: Time limit reached. Stopping Locust.
+[2020-07-05 22:35:01,454] drew-Virtual-Machine/INFO/locust.main: Shutting down (exit code 0), bye.
+[2020-07-05 22:35:01,454] drew-Virtual-Machine/INFO/locust.main: Cleaning up runner...
+[2020-07-05 22:35:01,454] drew-Virtual-Machine/INFO/locust.main: Running teardowns...
+ Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s failures/s
+--------------------------------------------------------------------------------------------------------------------------------------------
+ GET getBook                                                      352     0(0.00%)      38      27     319  |      33    5.89    0.00
+ POST putBook                                                     357     0(0.00%)      38      27     208  |      34    5.97    0.00
+ PUT putBook                                                      380     0(0.00%)      42      28     568  |      34    6.36    0.00
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregated                                                      1089     0(0.00%)      40      27     568  |      34   18.22    0.00
+
+Percentage of the requests completed within given times
+ Type                 Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100%
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ GET                  getBook                                                           352     33     34     36     39     45     51    110    170    320    320    320
+ POST                 putBook                                                           357     34     38     42     44     48     54     85    110    210    210    210
+ PUT                  putBook                                                           380     34     38     42     46     50     58    120    300    570    570    570
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ None                 Aggregated                                                       1089     34     36     40     43     49     54    110    190    350    570    570
+
+[2020-07-05 22:57:08,066] drew-Virtual-Machine/INFO/locust.main: Run time limit set to 60 seconds
+[2020-07-05 22:57:08,066] drew-Virtual-Machine/INFO/locust.main: Starting Locust 1.0.2
+[2020-07-05 22:57:08,067] drew-Virtual-Machine/INFO/locust.runners: Hatching and swarming 10 users at the rate 2 users/s (0 users already running)...
+[2020-07-05 22:57:12,577] drew-Virtual-Machine/INFO/locust.runners: All users hatched: UserBehavior: 10 (0 already running)
+[2020-07-05 22:58:07,797] drew-Virtual-Machine/INFO/locust.main: Time limit reached. Stopping Locust.
+[2020-07-05 22:58:07,800] drew-Virtual-Machine/INFO/locust.main: Shutting down (exit code 0), bye.
+[2020-07-05 22:58:07,800] drew-Virtual-Machine/INFO/locust.main: Cleaning up runner...
+[2020-07-05 22:58:07,800] drew-Virtual-Machine/INFO/locust.main: Running teardowns...
+ Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s failures/s
+--------------------------------------------------------------------------------------------------------------------------------------------
+ GET getBook                                                      347     0(0.00%)      44      27    1337  |      33    5.81    0.00
+ POST putBook                                                     334     0(0.00%)      40      27     311  |      33    5.59    0.00
+ PUT putBook                                                      403     0(0.00%)      42      26    1101  |      34    6.75    0.00
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregated                                                      1084     0(0.00%)      42      26    1337  |      33   18.15    0.00
+
+Percentage of the requests completed within given times
+ Type                 Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100%
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ GET                  getBook                                                           347     33     34     36     37     45     52    150    310   1300   1300   1300
+ POST                 putBook                                                           334     34     36     39     41     49     55    130    190    310    310    310
+ PUT                  putBook                                                           403     34     36     39     41     48     57     71    110   1100   1100   1100
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ None                 Aggregated                                                       1084     33     35     38     40     47     54    110    190   1200   1300   1300
+
+[2020-07-05 23:20:14,353] drew-Virtual-Machine/INFO/locust.main: Run time limit set to 60 seconds
+[2020-07-05 23:20:14,353] drew-Virtual-Machine/INFO/locust.main: Starting Locust 1.0.2
+[2020-07-05 23:20:14,354] drew-Virtual-Machine/INFO/locust.runners: Hatching and swarming 10 users at the rate 2 users/s (0 users already running)...
+[2020-07-05 23:20:18,862] drew-Virtual-Machine/INFO/locust.runners: All users hatched: UserBehavior: 10 (0 already running)
+[2020-07-05 23:21:14,115] drew-Virtual-Machine/INFO/locust.main: Time limit reached. Stopping Locust.
+[2020-07-05 23:21:14,117] drew-Virtual-Machine/INFO/locust.main: Shutting down (exit code 0), bye.
+[2020-07-05 23:21:14,117] drew-Virtual-Machine/INFO/locust.main: Cleaning up runner...
+[2020-07-05 23:21:14,117] drew-Virtual-Machine/INFO/locust.main: Running teardowns...
+ Name                                                          # reqs      # fails     Avg     Min     Max  |  Median   req/s failures/s
+--------------------------------------------------------------------------------------------------------------------------------------------
+ GET getBook                                                      379     0(0.00%)      41      26    1214  |      33    6.35    0.00
+ POST putBook                                                     357     0(0.00%)      47      27    1263  |      34    5.98    0.00
+ PUT putBook                                                      353     0(0.00%)      38      26     285  |      33    5.91    0.00
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregated                                                      1089     0(0.00%)      42      26    1263  |      33   18.24    0.00
+
+Percentage of the requests completed within given times
+ Type                 Name                                                           # reqs    50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100%
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ GET                  getBook                                                           379     33     35     37     40     49     64    110    150   1200   1200   1200
+ POST                 putBook                                                           357     34     37     40     42     50     57    110    300   1300   1300   1300
+ PUT                  putBook                                                           353     33     36     40     43     49     56     77    160    290    290    290
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ None                 Aggregated                                                       1089     33     36     40     42     49     56    110    180   1200   1300   1300
+

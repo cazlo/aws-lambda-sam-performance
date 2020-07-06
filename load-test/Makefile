@@ -99,15 +99,15 @@ quick-deploy-smokecheck:
 datetime=$(shell date --iso=seconds)
 spiky-load-test:
 	$(MAKE) -e testRunTime=60s users=10 waitTime=15m testIterations=20 clean load-test-all-remote-for-a-while && \
-	mkdir -p test_results/spiky-load-test/$(datetime) && \
-	mv *.log test_results/spiky-load-test/$(datetime)
+	mkdir -p results/spiky-load-test/$(datetime) && \
+	mv *.log results/spiky-load-test/$(datetime)
 
 quick-ramp-load-test:
 	$(MAKE) -e testRunTime=20s users=100 userHatchRate=50 waitTime=15m testIterations=20 clean load-test-all-remote-for-a-while && \
-	mkdir -p test_results/quick-ramp-load-test/$(datetime) && \
-	mv *.log test_results/quick-ramp-load-test/$(datetime)
+	mkdir -p results/quick-ramp-load-test/$(datetime) && \
+	mv *.log results/quick-ramp-load-test/$(datetime)
 
 consistent-throughput-load-test:
 	$(MAKE) -e testRunTime=60m users=3 userHatchRate=3 waitTime=15m testIterations=2 clean load-test-all-remote-for-a-while && \
-	mkdir -p test_results/quick-ramp-load-test/$(datetime) && \
-	mv *.log test_results/quick-ramp-load-test/$(datetime)
+	mkdir -p results/quick-ramp-load-test/$(datetime) && \
+	mv *.log results/quick-ramp-load-test/$(datetime)
