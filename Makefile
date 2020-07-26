@@ -31,13 +31,13 @@ build-node-express-typescript:
 deploy-node-express-typescript:
 		$(MAKE) -C nodejs/node-express-typescript deploy
 
-load-all-remote:
-		$(MAKE) -C load-test load-all-remote
+perform-load-test-suite:
+		$(MAKE) -C complete-test-run
 
 build-latest-sam-local:
 		$(MAKE) -C sam-local build
 
-build-all:
+all:
 	$(MAKE) build-latest-sam-local && \
 	$(MAKE) build-micronaut-2 && \
 	$(MAKE) build-micronaut-1-3-6 && \

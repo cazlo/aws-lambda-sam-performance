@@ -1,0 +1,121 @@
+[
+  {
+    "Id": "min",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "METRICNAME",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "Minimum"
+    }
+  },
+  {
+    "Id": "avg",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "METRICNAME",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "Average"
+    }
+  },
+  {
+    "Id": "p75",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "METRICNAME",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "p75"
+    }
+  },
+  {
+    "Id": "p95",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "METRICNAME",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "p95"
+    }
+  },
+  {
+    "Id": "p99",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "METRICNAME",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "p99"
+    }
+  },
+  {
+    "Id": "max",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "METRICNAME",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "Maximum"
+    }
+  },
+  {
+    "Id": "count",
+    "MetricStat": {
+      "Metric": {
+        "Namespace": "AWS/ApiGateway",
+        "MetricName": "Count",
+        "Dimensions": [
+          {
+            "Name": "ApiName",
+            "Value": "APINAME"
+          }
+        ]
+      },
+      "Period": PERIOD,
+      "Stat": "Sum"
+    }
+  }
+]
