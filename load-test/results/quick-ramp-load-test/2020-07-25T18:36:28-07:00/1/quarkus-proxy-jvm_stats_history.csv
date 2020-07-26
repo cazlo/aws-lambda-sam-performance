@@ -1,0 +1,5 @@
+"Timestamp","User Count","Type","Name","Requests/s","Failures/s","50%","66%","75%","80%","90%","95%","98%","99%","99.9%","99.99%","99.999%","100%","Total Request Count","Total Failure Count","Total Median Response Time","Total Average Response Time","Total Min Response Time","Total Max Response Time","Total Average Content Size"
+"1595728353","1","","Aggregated",0.00,0.00,"N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A",0,0,0,0,0,0,0
+"1595728355","92","","Aggregated",0.00,0.00,92,120,130,130,140,170,230,280,290,290,290,290,164,0,92,93,33,293,38
+"1595728357","100","","Aggregated",36.00,0.00,45,58,95,120,130,140,200,280,1700,1700,1700,1700,389,0,45,73,29,1668,38
+"1595728358","0","","Aggregated",61.00,0.00,42,52,63,100,130,140,180,270,1700,1700,1700,1700,466,0,42,67,29,1668,38
