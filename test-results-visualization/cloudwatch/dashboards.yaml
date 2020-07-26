@@ -624,3 +624,294 @@ Resources:
   }
   ]
 }
+    Type: AWS::CloudWatch:Dashbaord
+      Properties:
+        DashboardName: Performance Overview Consolidated
+        DashboardBody: |
+  {
+    "widgets": [
+    {
+      "type": "log",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n   | parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration, @log\n   | filter ispresent(@duration) and ispresent(InitDuration)\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg, pct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by App\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n   | sort p75\n",
+        "region": "us-west-2",
+        "stacked": false,
+        "title": "Cold Lambda Duration",
+        "view": "table"
+      }
+    },
+    {
+      "type": "log",
+      "x": 12,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n   | parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as TotalColdStartDuration\n   | filter ispresent(@duration) and ispresent(InitDuration)\n   | stats count() as cnt, min(InitDuration) as min, avg(InitDuration) as avg, pct(InitDuration, 75) as p75, pct(InitDuration, 95) as p95, pct(InitDuration, 99) as p99, max(InitDuration) as mx, stddev(InitDuration) as dev by App\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n   | sort p75\n",
+        "region": "us-west-2",
+        "stacked": false,
+        "title": "Cold start Init Duration",
+        "view": "table"
+      }
+    },
+    {
+      "type": "log",
+      "x": 0,
+      "y": 6,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\n\n\n\n\n\n\n\nTotalColdStartDuration, @log\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | filter ispresent(@duration) and ispresent(TotalColdStartDuration)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | stats count() as cnt, min(TotalColdStartDuration) as min,\n\n\n\n\n\n\n\navg(TotalColdStartDuration) as avg, pct(TotalColdStartDuration, 75) as p75, pct(TotalColdStartDuration, 95) as p95, pct(TotalColdStartDuration, 99) as p99, max(TotalColdStartDuration) as mx, stddev(TotalColdStartDuration) as dev by App\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | sort p75\n",
+        "region": "us-west-2",
+        "stacked": false,
+        "title": "Total Cold Runtimes",
+        "view": "table"
+      }
+    },
+    {
+      "type": "log",
+      "x": 12,
+      "y": 6,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\nTotalColdStartDuration, @log\n\n   | filter ispresent(@duration) and not ispresent(InitDuration)\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by  App\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n   | sort p75\n",
+        "region": "us-west-2",
+        "stacked": false,
+        "title": "Non-Cold Runtimes",
+        "view": "table"
+      }
+    },
+    {
+      "type": "log",
+      "x": 0,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' | parse @message /REPORT.*Max Memory Used: (?<MBused>.*) MB/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | stats count() as cnt, min(MBused) as min, avg(MBused) as avg, pct(MBused, 75) as p75, pct(MBused, 95) as p95, pct(MBused, 99) as p99, max(MBused) as mx, stddev(MBused) as dev by  App\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   | sort p75\n",
+        "region": "us-west-2",
+        "stacked": false,
+        "title": "Memory Usage",
+        "view": "table"
+      }
+    },
+    {
+      "type": "log",
+      "x": 12,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/lambda/micronaut-two' | SOURCE '/aws/lambda/micronaut-one-three-six' | SOURCE '/aws/lambda/node-express' | SOURCE '/aws/lambda/node-express-typescript' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler' | SOURCE '/aws/lambda/quarkus-api-gw-event-handler-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy-jvm' | SOURCE '/aws/lambda/quarkus-api-gw-proxy' |    parse @message /REPORT.*Init Duration: (?<InitDuration>.*) ms/\n| parse @log /245815535100:\\/aws\\/lambda\\/(?<App>.*)/\n   | fields @duration as ColdLambdaDuration, @duration + InitDuration as\nTotalColdStartDuration, @log\n\n   | filter ispresent(@duration)\n\n   | stats count() as cnt, min(@duration) as min, avg(@duration) as avg,\npct(@duration, 75) as p75, pct(@duration, 95) as p95, pct(@duration, 99) as p99, max(@duration) as mx, stddev(@duration) as dev by  App\n\n   | display App, cnt, min, avg, p75, p95, p99, mx, dev\n\n   | sort p75\n",
+        "region": "us-west-2",
+        "title": "Duration Stats",
+        "view": "table"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 18,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "Latency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway Average Latency",
+        "period": 86400,
+        "stat": "Average"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 6,
+      "y": 18,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "Latency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway P95 Latency",
+        "period": 86400,
+        "stat": "p95"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 18,
+      "y": 18,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "Latency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway Max Latency",
+        "period": 86400,
+        "stat": "Maximum"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 24,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "IntegrationLatency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway Average Integration Latency",
+        "period": 86400,
+        "stat": "Average"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 6,
+      "y": 24,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "IntegrationLatency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway P95 Integration Latency",
+        "period": 86400,
+        "stat": "p95"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 18,
+      "y": 24,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "IntegrationLatency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway Max Integration Latency",
+        "period": 86400,
+        "stat": "Maximum"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 18,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "Latency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway P99 Latency",
+        "period": 86400,
+        "stat": "p99"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 24,
+      "width": 6,
+      "height": 6,
+      "properties": {
+        "metrics": [
+        [ "AWS/ApiGateway", "IntegrationLatency", "ApiName", "micronaut-one-three-six" ],
+        [ "...", "micronaut-two" ],
+        [ "...", "node-express" ],
+        [ "...", "node-express-typescript" ],
+        [ "...", "quarkus-api-gw-event-handler" ],
+        [ "...", "quarkus-api-gw-proxy" ],
+        [ "...", "quarkus-api-gw-proxy-jvm" ],
+        [ "...", "quarkus-api-gw-event-handler-jvm" ]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "us-west-2",
+        "title": "API Gateway P99 Integration Latency",
+        "period": 86400,
+        "stat": "p99"
+      }
+    }
+    ]
+  }
