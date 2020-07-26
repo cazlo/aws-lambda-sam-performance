@@ -36,7 +36,7 @@ generateQuery:
 extractLatencyMetrics:
 	aws cloudwatch get-metric-data --metric-data-queries file://./$(outDir)/$(generatedQuery) \
 	 	--start-time 2020-07-02T04:00:00Z \
-	 	--end-time 2020-07-26T01:30:00Z \
+	 	--end-time 2020-07-26T10:25:00Z \
 	 	> $(outDir)/latency-data-$(app).json
 
 transformLatencyMetrics:
