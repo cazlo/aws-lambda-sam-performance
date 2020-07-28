@@ -45,7 +45,6 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
@@ -75,7 +74,6 @@ export default function Dashboard() {
 
           </Grid>
         </Container>
-      </main>
     </div>
   );
 }

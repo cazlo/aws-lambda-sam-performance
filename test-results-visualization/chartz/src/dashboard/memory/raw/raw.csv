@@ -1,0 +1,9 @@
+App,count,min,avg,p75,p95,p99,max,dev
+quarkus-api-gw-event-handler,645863,30,79.2933,86,86,87,87,9.6603
+node-express,626487,75,89.9775,95,97,97,101,6.3451
+node-express-typescript,644247,75,90.0673,95,97,97,99,6.3158
+quarkus-api-gw-proxy,645534,33,97.6714,104,104,105,105,10.2528
+micronaut-one-three-six,630891,36,100.2508,106,106,107,107,11.8928
+micronaut-two,663785,38,104.5074,109,110,110,110,12.1292
+quarkus-api-gw-event-handler-jvm,605135,103,126.8671,132,133,133,133,7.1486
+quarkus-api-gw-proxy-jvm,608673,124,163.9199,174,178,179,179,10.9153
