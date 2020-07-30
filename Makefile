@@ -73,3 +73,9 @@ timeAllBuilds:
 	$(MAKE) -e buildStepName=build-quarkus-api-gw-event-handler testIterations=10 testName=quarkus-api-gw-event-handler timeABuild && \
 	$(MAKE) -e buildStepName=build-node-express                 testIterations=10 testName=node-express                 timeABuild && \
 	$(MAKE) -e buildStepName=build-node-express-typescript      testIterations=10 testName=node-express-typescript      timeABuild
+
+build-gh-pages:
+	$(MAKE) -C test-results-visualization/chartz
+
+deploy-gh-pages:
+	$(MAKE) -C test-results-visualization/chartz deploy
