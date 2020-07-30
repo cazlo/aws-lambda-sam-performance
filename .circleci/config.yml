@@ -183,6 +183,25 @@ jobs:
           command: make deploy-node-express-typescript
       - store_artifacts:
           path: /tmp/aws-lambda-sam-performance/nodejs/node-express-typescript/packaged.yaml
+
+  gh-pages-deploy:
+    docker:
+      - image: cimg/node:12.18
+    steps:
+      - checkout
+      - run:
+          name: build gh-pages
+          command: |
+            make build-gh-pages
+            git config user.email "ci-build@andrewpaettie.com"
+            git config user.name "ci-build"
+      - add_ssh_keys:
+          fingerprints:
+            - "b1:5c:c0:e0:99:db:f4:c5:26:70:a1:11:33:2a:9b:01"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: make deploy-gh-pages
+
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
 workflows:
@@ -194,7 +213,6 @@ workflows:
             branches:
               only:
                 - /micronaut.*/
-                - /load.*/
                 - master
       - micronaut-2-deploy:
           requires:
@@ -203,14 +221,12 @@ workflows:
             branches:
               only:
                 - /micronaut.*/
-                - /load.*/
                 - master
       - micronaut-1-3-6-build:
           filters:
             branches:
               only:
                 - /micronaut.*/
-                - /load.*/
                 - master
       - micronaut-1-3-6-deploy:
           requires:
@@ -219,7 +235,6 @@ workflows:
             branches:
               only:
                 - /micronaut.*/
-                - /load.*/
                 - master
 
       - quarkus-api-gw-proxy-build:
@@ -227,7 +242,6 @@ workflows:
             branches:
               only:
                 - /quarkus.*/
-                - /load.*/
                 - master
       - quarkus-api-gw-proxy-deploy:
           requires:
@@ -236,14 +250,12 @@ workflows:
             branches:
               only:
                 - /quarkus.*/
-                - /load.*/
                 - master
       - quarkus-api-gw-event-handler-build:
           filters:
             branches:
               only:
                 - /quarkus.*/
-                - /load.*/
                 - master
       - quarkus-api-gw-event-handler-deploy:
           requires:
@@ -252,7 +264,6 @@ workflows:
             branches:
               only:
                 - /quarkus.*/
-                - /load.*/
                 - master
 
       - node-express-build:
@@ -260,7 +271,6 @@ workflows:
             branches:
               only:
                 - /node.*/
-                - /load.*/
                 - master
       - node-express-deploy:
           requires:
@@ -269,7 +279,6 @@ workflows:
             branches:
               only:
                 - /node.*/
-                - /load.*/
                 - master
 
       - node-express-typescript-build:
@@ -277,7 +286,6 @@ workflows:
             branches:
               only:
                 - /node.*/
-                - /load.*/
                 - master
       - node-express-typescript-deploy:
           requires:
@@ -286,5 +294,11 @@ workflows:
             branches:
               only:
                 - /node.*/
+                - master
+
+      - gh-pages-deploy:
+          filters:
+            branches:
+              only:
                 - /load.*/
                 - master
