@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/aws-lambda-sam-performance/static/css/main.7e58e3ef.chunk.css",
+    "main.js": "/aws-lambda-sam-performance/static/js/main.cd51cd59.chunk.js",
+    "main.js.map": "/aws-lambda-sam-performance/static/js/main.cd51cd59.chunk.js.map",
+    "runtime-main.js": "/aws-lambda-sam-performance/static/js/runtime-main.20dfb115.js",
+    "runtime-main.js.map": "/aws-lambda-sam-performance/static/js/runtime-main.20dfb115.js.map",
+    "static/js/2.55e0fa7d.chunk.js": "/aws-lambda-sam-performance/static/js/2.55e0fa7d.chunk.js",
+    "static/js/2.55e0fa7d.chunk.js.map": "/aws-lambda-sam-performance/static/js/2.55e0fa7d.chunk.js.map",
+    "index.html": "/aws-lambda-sam-performance/index.html",
+    "precache-manifest.2563e82912361d2d0b3ad5ba3dcd823b.js": "/aws-lambda-sam-performance/precache-manifest.2563e82912361d2d0b3ad5ba3dcd823b.js",
+    "service-worker.js": "/aws-lambda-sam-performance/service-worker.js",
+    "static/css/main.7e58e3ef.chunk.css.map": "/aws-lambda-sam-performance/static/css/main.7e58e3ef.chunk.css.map",
+    "static/js/2.55e0fa7d.chunk.js.LICENSE.txt": "/aws-lambda-sam-performance/static/js/2.55e0fa7d.chunk.js.LICENSE.txt",
+    "static/media/sam-logo.png": "/aws-lambda-sam-performance/static/media/sam-logo.71cd9000.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.20dfb115.js",
+    "static/js/2.55e0fa7d.chunk.js",
+    "static/css/main.7e58e3ef.chunk.css",
+    "static/js/main.cd51cd59.chunk.js"
+  ]
+}
