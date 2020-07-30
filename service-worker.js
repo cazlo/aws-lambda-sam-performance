@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/aws-lambda-sam-performance/precache-manifest.2563e82912361d2d0b3ad5ba3dcd823b.js"
+  "/aws-lambda-sam-performance/precache-manifest.f25862035207349509344ec408d8cb5c.js"
 );
 
 self.addEventListener('message', (event) => {
