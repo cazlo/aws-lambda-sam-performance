@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-    Radar, RadarChart, PolarGrid, Legend,
+    Radar, RadarChart, PolarGrid,
     PolarAngleAxis, PolarRadiusAxis,
 } from 'recharts';
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
@@ -11,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import {buildChartData, apps, avgMetric, metrics, buildCases} from "./util";
+import {buildChartData, apps, metrics, buildCases} from "./util";
 import {makeStyles} from "@material-ui/styles";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -19,7 +18,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Icon from "@material-ui/core/Icon";
-import zIndex from "@material-ui/core/styles/zIndex";
 
 const customizedTick = (props) => {
     const {payload, x, y, textAnchor} = props;
@@ -174,11 +172,10 @@ export default function OverviewRadar() {
                             </TableHead>
                             <TableBody>
                                 {sortedApps.map((app, idx) =>
-                                    <TableRow key={`${app}-rank-table-row`} accessKey={app} hover
+                                    <TableRow key={`${app}-rank-table-row`} hover
                                               onMouseEnter={(e) => {
-                                                  const { currentTarget } = e;
                                                   setAppOpacity(apps.reduce((appOpacity, a) => {
-                                                      appOpacity[a] = a === currentTarget.accessKey ? 1.0 : 0.1;
+                                                      appOpacity[a] = a === app ? 1.0 : 0.1;
                                                       return appOpacity;
                                                   }, {}))
                                               }}
@@ -189,10 +186,9 @@ export default function OverviewRadar() {
                                                     }, {}))
                                                 }}
                                               onClick={(e) => {
-                                                  const { currentTarget } = e;
                                                     const newState = {
                                                         ...appSelection,
-                                                        [currentTarget.accessKey]: !appSelection[currentTarget.accessKey]
+                                                        [app]: !appSelection[app]
                                                     };
                                                     setAppSelection(newState);
                                                     setChartData(buildChartData(selectedLatency, selectedBuild, selectedMemory))
